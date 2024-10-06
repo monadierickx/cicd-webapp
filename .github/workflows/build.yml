@@ -36,5 +36,6 @@
             name: Build and don't push
             uses: docker/build-push-action@v6
             with:
-              push: false
-              tags: user/app:latest
+              push: false 
+              tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
+              file: ./Dockerfile
