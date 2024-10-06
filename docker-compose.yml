@@ -1,0 +1,47 @@
+services:
+  webapp:
+    image: monadierickx/webapp:latest
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ./dockerlab/webapp/database:/app/database
+    depends_on: 
+      database:
+        condition: service_healthy
+    environment: 
+      MYSQL_URL: mysql://myapp_user:secret@database/myapp_db
+    healthcheck:
+      test: ["CMD", "curl", "localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
+  database:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: myapp_db
+      MYSQL_USER: myapp_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
+  test:
+    image: monadierickx/webapp:latest
+    depends_on:
+      database:
+        condition: service_healthy
+      webapp:
+        condition: service_healthy
+    environment:
+      API_URL: http://webapp:3000  
+    command: yarn test
+
+volumes:
+  mysql-data:

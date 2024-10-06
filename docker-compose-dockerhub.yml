@@ -1,0 +1,33 @@
+services:
+  webapp:
+    image: monadierickx/webapp:latest
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ./dockerlab/webapp/database:/app/database
+    depends_on: 
+      - database
+    environment: 
+      MYSQL_URL: mysql://myapp_user:secret@database/myapp_db
+  
+  database:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: myapp_db
+      MYSQL_USER: myapp_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+  
+  test:
+    image: monadierickx/webapp:latest
+    depends_on:
+      - webapp
+    environment:
+      API_URL: http://webapp:3000  
+    command: yarn test
+
+volumes:
+  mysql-data:
