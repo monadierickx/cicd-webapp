@@ -20,7 +20,6 @@
               node-version: 20
           - run: yarn install
           - run: yarn lint
-          - run: yarn test
           -
             name: Set up QEMU
             uses: docker/setup-qemu-action@v3
@@ -40,3 +39,5 @@
               push: true
               tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
               file: ./Dockerfile
+          - run: yarn start
+          - run: yarn test
