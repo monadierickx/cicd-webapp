@@ -10,6 +10,11 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "export default": [
+    {
+        "files": [".js"]
+    }
+  ],
   "rules": {
     "indent": [
       "error",
