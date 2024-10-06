@@ -33,9 +33,9 @@
               username: ${{ secrets.DOCKERHUB_USERNAME }}
               password: ${{ secrets.DOCKERHUB_TOKEN }}
           -
-            name: Build and don't push
+            name: Build and push
             uses: docker/build-push-action@v6
             with:
-              push: false 
+              push: true
               tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
               file: ./Dockerfile
