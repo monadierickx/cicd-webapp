@@ -45,7 +45,8 @@
               services: |
                 webapp 
                 database    
-          - name: Execute tests in the running services
-            run: |
-              docker-compose run --rm test
+          - uses: actions/checkout@v3
+          - uses: adrielcodeco/docker-compose-run-action@v1
+            with:
+              service: test
           
