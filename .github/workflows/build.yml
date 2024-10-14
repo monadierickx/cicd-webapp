@@ -40,7 +40,7 @@
               tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
               file: ./Dockerfile
           - name: Start webapp and database
-            run: docker compose up webapp database 
+            run: docker compose up -d webapp database 
           - name: Test 
             run: docker compose run --rm test
           
