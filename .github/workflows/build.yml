@@ -39,5 +39,13 @@
               push: true
               tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
               file: ./Dockerfile
-          - run: yarn start
-          - run: yarn test
+          - name: Docker Compose Action
+            uses: hoverkraft-tech/compose-action@v2.0.2
+            with:
+              services: |
+                webapp 
+                database    
+          - name: Execute tests in the running services
+            run: |
+              docker-compose exec test-app pytest
+          
