@@ -46,7 +46,5 @@
                 webapp 
                 database    
           - name: Run tests
-            uses: adrielcodeco/docker-compose-run-action@v1
-            with:
-              service: test
+            run: docker compose run --rm test
           
