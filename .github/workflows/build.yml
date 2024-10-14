@@ -40,11 +40,7 @@
               tags: ${{ secrets.DOCKERHUB_USERNAME }}/webapp:latest
               file: ./Dockerfile
           - name: Start webapp and database
-            uses: hoverkraft-tech/compose-action@v2.0.2
-            with:
-              services: |
-                webapp 
-                database    
-          - name: Run tests
+            run: docker compose up webapp database 
+          - name: Test 
             run: docker compose run --rm test
           
